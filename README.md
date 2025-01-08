@@ -1,6 +1,6 @@
 # Custom Shell in Golang
 
-This is a custom shell implemented in Golang that supports various basic functionalities such as quoting, navigation, and execution of commands. The project is designed to give you an understanding of how shell environments work under the hood by implementing features like handling quotes, paths, and external program execution.
+This is a custom shell implemented in Golang that supports various basic functionalities such as quoting, navigation, and execution of commands. The project is designed to give an understanding of how shell environments work under the hood by implementing features like handling quotes, paths, and external program execution.
 
 ## Features
 
