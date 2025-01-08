@@ -26,5 +26,5 @@ To run the custom shell on your system, follow these steps:
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/HarshMN2345/-Custom-Shell-Implementation
+git clone https://github.com/HarshMN2345/Custom-Shell-Implementation
 cd Shell
