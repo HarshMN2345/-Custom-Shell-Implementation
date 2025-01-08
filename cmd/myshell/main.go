@@ -75,7 +75,7 @@ func parseCommand(input string) []string {
 // handleRedirection handles commands with output redirection
 func handleRedirection(command []string) (cmd []string, outputFile string, err error) {
 	for i, part := range command {
-		if strings.HasPrefix(part, "1>") || strings.HasPrefix(part, ">") {
+		if strings.HasPrefix(part, ">") || strings.HasPrefix(part, "1>") {
 			outputFile = strings.TrimPrefix(part, "1>")
 			outputFile = strings.TrimPrefix(outputFile, ">")
 
@@ -131,6 +131,37 @@ func main() {
 						fmt.Fprintf(os.Stderr, "cd: %s: No such file or directory\n", commands[1])
 					} else {
 						fmt.Fprintf(os.Stderr, "cd: %s: %v\n", commands[1], err)
+					}
+				}
+			}
+			fmt.Fprint(os.Stdout, "$ ")
+
+		case "type":
+			if len(commands) < 2 {
+				fmt.Fprintln(os.Stdout, "type: missing operand")
+			} else {
+				switch commands[1] {
+				case "echo":
+					fmt.Fprintln(os.Stdout, "echo is a shell builtin")
+				case "exit":
+					fmt.Fprintln(os.Stdout, "exit is a shell builtin")
+				case "type":
+					fmt.Fprintln(os.Stdout, "type is a shell builtin")
+				default:
+					// Search for the command in PATH
+					pathEnv := os.Getenv("PATH")
+					paths := strings.Split(pathEnv, string(os.PathListSeparator))
+					found := false
+					for _, dir := range paths {
+						executablePath := filepath.Join(dir, commands[1])
+						if _, err := os.Stat(executablePath); err == nil {
+							fmt.Fprintf(os.Stdout, "%s is %s\n", commands[1], executablePath)
+							found = true
+							break
+						}
+					}
+					if !found {
+						fmt.Fprintf(os.Stdout, "%s: not found\n", commands[1])
 					}
 				}
 			}
